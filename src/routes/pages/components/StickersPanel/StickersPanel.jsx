@@ -1,32 +1,48 @@
 import "@/routes/pages/components/StickersPanel/StickersPanel.css";
-import React from "react";
+import React, { useState } from "react";
+import { nanoid } from "nanoid";
 import cardsData from "@/data/CardsData";
-import { useState } from "react";
+import Sticker from "@/routes/pages/components/Stiker/Sticker.jsx";
+import AddForm from "@/routes/pages/components/AddForm/AddForm.jsx";
 
 function StickersPanel() {
-  const [textareas, setTextAreas] = useState(cardsData);
+  const [textareas, setTextAreas] = useState(() =>
+      cardsData.map(el => ({ ...el, id: nanoid(5) }))
+  );
+
+  const [isActive, setActive] = useState(null);
+
+  const changeHandler = (event, id) => {
+    const newValue = event.target.value;
+    setTextAreas(prev =>
+        prev.map(el =>
+            el.id === id ? { ...el, value: newValue } : el
+        )
+    );
+  };
+
+  const addSticker = () => {
+    const newSticker = {
+      id: nanoid(5),
+      value: '',
+      background: 'rgba(255, 255, 255, 0.8)',
+      color: 'black',
+      fontSize: '16px',
+    };
+    setTextAreas(prev => [...prev, newSticker]);
+  };
 
   return (
-    <div className="wrapper d-flex flex-column align-items-center gap-4">
-      <button className="btn btn-primary">Добавить стикер</button>
-      {textareas.map((item, index) => (
-        <textarea
-          key={index}
-          id={item.id}
-          name={'textarea' + index}
-          style={{ backgroundColor: item.background, color: item.color }}
-          value={item.value}
-          className="textareaPanel"
-          onChange={(e) => {
-            setTextAreas((prev) =>
-              prev.map((el) =>
-                el.id === item.id ? { ...el, value: e.target.value } : el
-              )
-            );
-          }}
-        ></textarea>
-      ))}
-    </div>
+      <div className="wrapper d-flex align-items-center gap-4">
+        <div className="form">
+          <AddForm addSticker={addSticker} />
+        </div>
+        <div className="stickers d-flex align-items-start flex-wrap gap-4">
+          {textareas.map(item => (
+              <Sticker key={item.id} item={item} changeHandler={changeHandler} />
+          ))}
+        </div>
+      </div>
   );
 }
 
