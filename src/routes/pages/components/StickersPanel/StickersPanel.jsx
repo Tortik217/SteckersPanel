@@ -3,14 +3,14 @@ import React, { useState } from "react";
 import { nanoid } from "nanoid";
 import cardsData from "@/data/CardsData";
 import Sticker from "@/routes/pages/components/Stiker/Sticker.jsx";
-import AddForm from "@/routes/pages/components/AddForm/AddForm.jsx";
+import Modal from "../Modal/Modal";
 
 function StickersPanel() {
   const [textareas, setTextAreas] = useState(() =>
       cardsData.map(el => ({ ...el, id: nanoid(5) }))
   );
 
-  const [isActive, setActive] = useState(null);
+  const [isActive, setActive] = useState(true);
 
   const changeHandler = (event, id) => {
     const newValue = event.target.value;
@@ -33,15 +33,14 @@ function StickersPanel() {
   };
 
   return (
-      <div className="wrapper d-flex align-items-center gap-4">
-        <div className="form">
-          <AddForm addSticker={addSticker} />
-        </div>
+      <div className="wrapper d-flex flex-column align-items-center gap-4">
+        <button onClick={addSticker} className="btn btn-primary">Добавить стикер</button>
         <div className="stickers d-flex align-items-start flex-wrap gap-4">
           {textareas.map(item => (
               <Sticker key={item.id} item={item} changeHandler={changeHandler} />
           ))}
         </div>
+        <Modal active={isActive} setActive={setActive}></Modal>
       </div>
   );
 }

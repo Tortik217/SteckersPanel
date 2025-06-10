@@ -1,9 +1,11 @@
 import React from "react";
-import './AddForm.css'
+import './Modal.css'
 
-function AddForm({addSticker}) {
+function Modal({active, setActive}) {
   return (
-      <form action="#" className="d-flex flex-column gap-4">
+    <div onClick={() => setActive(false)} className="modal1 d-flex flex-column align-items-center justify-content-center">
+      <div onClick={(e) => {e.stopPropagation}} className="modal1__content d-flex flex-column align-items-center justify-content-center gap-4">
+        <form action="#" className="d-flex flex-column align-items-center justify-content-center gap-4">
         <div className="input-container">
           <label htmlFor="value" className='label'>
             <textarea
@@ -50,9 +52,11 @@ function AddForm({addSticker}) {
             <input type="number" min={2}/>
           </label>
         </div>
-        <button onClick={addSticker} className="btn btn-primary" type={"submit"}>Добавить стикер</button>
       </form>
+      </div>
+    </div>
+      
   )
 }
 
-export default AddForm
+export default Modal
