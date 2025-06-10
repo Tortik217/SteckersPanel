@@ -10,7 +10,7 @@ function StickersPanel() {
       cardsData.map(el => ({ ...el, id: nanoid(5) }))
   );
 
-  const [isActive, setActive] = useState(true);
+  const [isActive, setModalActive] = useState(true);
 
   const changeHandler = (event, id) => {
     const newValue = event.target.value;
@@ -34,13 +34,14 @@ function StickersPanel() {
 
   return (
       <div className="wrapper d-flex flex-column align-items-center gap-4">
-        <button onClick={addSticker} className="btn btn-primary">Добавить стикер</button>
+        <button onClick={() => addSticker()} className="btn btn-primary">Добавить стикер</button>
+        <button onClick={() => setModalActive(true)} className="btn btn-primary">Modal</button>
         <div className="stickers d-flex align-items-start flex-wrap gap-4">
           {textareas.map(item => (
               <Sticker key={item.id} item={item} changeHandler={changeHandler} />
           ))}
         </div>
-        <Modal active={isActive} setActive={setActive}></Modal>
+        <Modal active={isActive} setActive={setModalActive} />
       </div>
   );
 }

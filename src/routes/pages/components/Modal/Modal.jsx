@@ -3,11 +3,15 @@ import './Modal.css'
 
 function Modal({active, setActive}) {
   return (
-    <div onClick={() => setActive(false)} className="modal1 d-flex flex-column align-items-center justify-content-center">
-      <div onClick={(e) => {e.stopPropagation}} className="modal1__content d-flex flex-column align-items-center justify-content-center gap-4">
-        <form action="#" className="d-flex flex-column align-items-center justify-content-center gap-4">
-        <div className="input-container">
-          <label htmlFor="value" className='label'>
+      <div
+          className={`${active ? 'modal1 active' : 'modal1'} d-flex flex-column align-items-center justify-content-center`}
+          onClick={() => setActive(false)}>
+        <div
+            className={`${active ? 'modal1__content active' : 'modal1__content'} d-flex flex-column align-items-center justify-content-center gap-4`}
+            onClick={(e) => e.stopPropagation()}>
+          <form action="#" className="d-flex flex-column align-items-center justify-content-center gap-4">
+            <div className="input-container">
+              <label htmlFor="value" className='label'>
             <textarea
                 name="value"
                 id="value"
@@ -17,45 +21,46 @@ function Modal({active, setActive}) {
                 required
                 className="text-input"
             ></textarea>
-          </label>
+              </label>
+            </div>
+            <div className="input-container">
+              <label htmlFor="background" className='label'>Background:
+                <select name="background" id="background">
+                  <option disabled={true} selected>Select</option>
+                  <option value="red">red</option>
+                  <option value="orange">orange</option>
+                  <option value="yellow">yellow</option>
+                  <option value="green">green</option>
+                  <option value="aquamarine">aquamarine</option>
+                  <option value="blue">blue</option>
+                  <option value="purple">purple</option>
+                </select>
+              </label>
+            </div>
+            <div className="input-container">
+              <label htmlFor="color" className='label'>Color:
+                <select name="color" id="color">
+                  <option disabled={true} selected>Select</option>
+                  <option value="red">red</option>
+                  <option value="orange">orange</option>
+                  <option value="yellow">yellow</option>
+                  <option value="green">green</option>
+                  <option value="aquamarine">aquamarine</option>
+                  <option value="blue">blue</option>
+                  <option value="purple">purple</option>
+                </select>
+              </label>
+            </div>
+            <div className="input-container">
+              <label htmlFor="fontSize" className='label'>FontSize:
+                <input type="number" min={2}/>
+              </label>
+            </div>
+            <button type={"submit"}>Добавить данные</button>
+          </form>
         </div>
-        <div className="inpit-container">
-          <label htmlFor="background" className='label'>Background:
-            <select name="background" id="background">
-              <option disabled={true} selected>Select</option>
-              <option value="red">red</option>
-              <option value="orange">orange</option>
-              <option value="yellow">yellow</option>
-              <option value="green">green</option>
-              <option value="aquamarine">aquamarine</option>
-              <option value="blue">blue</option>
-              <option value="purple">purple</option>
-            </select>
-          </label>
-        </div>
-        <div className="inpit-container">
-          <label htmlFor="color" className='label'>Color:
-            <select name="color" id="color">
-              <option disabled={true} selected>Select</option>
-              <option value="red">red</option>
-              <option value="orange">orange</option>
-              <option value="yellow">yellow</option>
-              <option value="green">green</option>
-              <option value="aquamarine">aquamarine</option>
-              <option value="blue">blue</option>
-              <option value="purple">purple</option>
-            </select>
-          </label>
-        </div>
-        <div className="inpit-container">
-          <label htmlFor="fontSize" className='label'>FontSize:
-            <input type="number" min={2}/>
-          </label>
-        </div>
-      </form>
       </div>
-    </div>
-      
+
   )
 }
 
