@@ -10,7 +10,8 @@ function StickersPanel() {
       cardsData.map(el => ({ ...el, id: nanoid(5) }))
   );
 
-  const [isActive, setModalActive] = useState(true);
+  const [isActive, setModalActive] = useState(null);
+  const [editingSticker, setEditingSticker] = useState(null);
 
   const changeHandler = (event, id) => {
     const newValue = event.target.value;
@@ -32,16 +33,40 @@ function StickersPanel() {
     setTextAreas(prev => [...prev, newSticker]);
   };
 
+  const openEditModal = (item) => {
+    setEditingSticker(item);
+    setModalActive(true);
+  };
+
+  const removeSticker = (id) => {
+    setTextAreas(prev => prev.filter(el => el.id !== id));
+  };
+
+    const updateSticker = (updatedSticker) => {
+    setTextAreas(prev =>
+      prev.map(el => el.id === updatedSticker.id ? updatedSticker : el)
+    );
+  };
+
   return (
       <div className="wrapper d-flex flex-column align-items-center gap-4">
-        <button onClick={() => addSticker()} className="btn btn-primary">Добавить стикер</button>
-        <button onClick={() => setModalActive(true)} className="btn btn-primary">Modal</button>
+        <button onClick={() => addSticker()} className="btn btn-primary">Add Sticker</button>
         <div className="stickers d-flex align-items-start flex-wrap gap-4">
           {textareas.map(item => (
-              <Sticker key={item.id} item={item} changeHandler={changeHandler} />
+              <Sticker 
+              key={item.id} 
+              item={item} 
+              changeHandler={changeHandler} 
+              openEditModal={openEditModal}
+              removeSticker={removeSticker}
+              />
           ))}
         </div>
-        <Modal active={isActive} setActive={setModalActive} />
+        <Modal 
+        active={isActive} 
+        setActive={setModalActive} 
+        editingSticker={editingSticker}
+        updateSticker={updateSticker}/>
       </div>
   );
 }
